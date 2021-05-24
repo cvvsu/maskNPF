@@ -1,3 +1,3 @@
 # maskNPF
 
-The code will be released later. Thank you for your patience.
+The code will be released later. Please `stay tuned`.
