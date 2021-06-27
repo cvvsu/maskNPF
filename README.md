@@ -2,7 +2,7 @@
 
 The code will be released later. Please `stay tuned`.
 
-If you have any question, please open an issue or directly send email to us.
+If you have any question, please open an issue or directly send an email to us.
 
 ## Code list
 
