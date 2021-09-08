@@ -25,10 +25,11 @@ Our code can calculate GRs automatically for the size ranges:
 You can change the size range to calculate other GRs, taking 3-7 nm as an example.
 
 
-##TODO
+## TODO
 - The pre-trained model used in the manuscript.
 - Using a notebook to illustrate how to use the code.
 - Train the Mask R-CNN model on all NPF events from the four datasets and upload the trained model.
+- A fancy GUI.
 
 ## License
 
