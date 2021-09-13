@@ -31,6 +31,20 @@ You can change the size range to calculate other GRs, taking 3-7 nm as an exampl
 - Train the Mask R-CNN model on all NPF events from the four datasets and upload the trained model.
 - Provide a fancy GUI.
 
+## Citation
+Please kindly cite our paper if you use our code.
+
+@Article{acp-2021-771,
+AUTHOR = {Su, P. and Joutsensaari, J. and Dada, L. and Zaidan, M. A. and Nieminen, T. and Li, X. and Wu, Y. and Decesari, S. and Tarkoma, S. and Pet\"aj\"a, T. and Kulmala, M. and Pellikka, P.},
+TITLE = {New Particle Formation Events Detection with Deep Learning},
+JOURNAL = {Atmospheric Chemistry and Physics Discussions},
+VOLUME = {2021},
+YEAR = {2021},
+PAGES = {1--21},
+URL = {https://acp.copernicus.org/preprints/acp-2021-771/},
+DOI = {10.5194/acp-2021-771}
+}
+
 ## License
 
 The code is released under the [MIT License](https://github.com/cvvsu/maskNPF/blob/main/LICENSE). 
