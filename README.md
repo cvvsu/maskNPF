@@ -34,6 +34,8 @@ You can change the size range to calculate other GRs, taking 3-7 nm as an exampl
 ## Citation
 Please kindly cite our paper if you use our code.
 
+[paper](https://acp.copernicus.org/preprints/acp-2021-771/)
+
 @Article{acp-2021-771,
 AUTHOR = {Su, P. and Joutsensaari, J. and Dada, L. and Zaidan, M. A. and Nieminen, T. and Li, X. and Wu, Y. and Decesari, S. and Tarkoma, S. and Pet\"aj\"a, T. and Kulmala, M. and Pellikka, P.},
 TITLE = {New Particle Formation Events Detection with Deep Learning},
