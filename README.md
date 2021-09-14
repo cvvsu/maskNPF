@@ -7,7 +7,7 @@ If you have any question, please open an issue or directly send an email to us.
 
 ## TODO
 - Upload the pre-trained model used in the manuscript.
-- Use a notebook to illustrate how to use the code.
+- Use a notebook to illustrate how to use the code step-by-step.
 - Train the Mask R-CNN model on all NPF events from the four datasets and upload the trained model.
 - Provide a fancy GUI.
 
@@ -20,10 +20,10 @@ If you have any question, please open an issue or directly send an email to us.
 
 2. Run the `main.py`. 
 
-    - Drawing the NPF images do not take too much time.
-    - However, the mask detection process is quite slow if you do not have a powerful GPU. [Google Colab](https://colab.research.google.com/notebooks/intro.ipynb?utm_source=scs-index#) will provide a free GPU, which is a possible choice. After detecting the masks, you can download the masks to your local device for visualization.
-    - You need to select the masks yourself.
-    - Once the masks are obtained, the GRs, start times, and end times can be determined at the same time.
+    - Drawing the NPF images does not take too much time.
+    - However, the mask detection process is quite slow if you do not have a powerful GPU. [Google Colab](https://colab.research.google.com/notebooks/intro.ipynb?utm_source=scs-index#) may provide a free GPU, which is a possible choice. After detecting the masks, you can download the masks to your local device for visualization.
+    - You need to select the masks yourself (more than one detected masks for some days).
+    - Once the masks are obtained, the GRs, start times, and end times can be determined automatically.
 
 **NOTE**: make sure that your local device is powerful enough; otherwise, please modify the function [save_SE_GR](https://github.com/cvvsu/maskNPF/blob/a959edf04f794d70e7ef8979494e8f36e317326e/model.py#L285) in the `model.py` to calculate GRs one-by-one (do not use the `multiprocessing` package).
 
@@ -48,6 +48,8 @@ Our code can calculate GRs automatically for the size ranges:
 [10-25 nm](https://github.com/cvvsu/maskNPF/blob/a959edf04f794d70e7ef8979494e8f36e317326e/model.py#L250)
 
 [3-25 nm](https://github.com/cvvsu/maskNPF/blob/a959edf04f794d70e7ef8979494e8f36e317326e/model.py#L253)
+
+[size ranges determined by the detected masks](https://github.com/cvvsu/maskNPF/blob/a7c188f64e8329e0ae50ec23936158e4c89e07b0/model.py#L254)
 
 You can change the size range to calculate other GRs, taking 3-7 nm as an example. The parameters are changed in the fuction [get_GRs](https://github.com/cvvsu/maskNPF/blob/a959edf04f794d70e7ef8979494e8f36e317326e/model.py#L239) in the `model.py`. Once other size ranges are added, please also change the [save_dict](https://github.com/cvvsu/maskNPF/blob/a959edf04f794d70e7ef8979494e8f36e317326e/model.py#L274) at the same time in the [get_SE_GR](https://github.com/cvvsu/maskNPF/blob/a959edf04f794d70e7ef8979494e8f36e317326e/model.py#L257) function.
 
