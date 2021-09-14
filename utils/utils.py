@@ -57,7 +57,8 @@ def psd2im(df,
         use_xaxis (bool)   --  whether to draw the x-axis
         use_yaxis (bool)   --  whether to draw the y-axis
         use_cbar (bool)    --  whether to use the colorbar
-
+        ftsize (int)       --  fontsize for plotting
+    
     """
 
     # get the psd data
@@ -177,6 +178,7 @@ def draw_subplots(dfs,
         indexes (str list) --  indexed for each subplot adding to the title (suffix)
         cbar (str)         --  ['single' | 'multirow' | 'all' | 'none']
         texts (str array)  --  an array containing letters 'a', 'b', ...
+        ftsize (int)       --  fontsize for plotting
     """
     assert len(names) == nrows * ncols
 
@@ -246,7 +248,15 @@ def draw_subplots(dfs,
 
 
 def reshape_mask(mask, shape):
-    """reshape the mask to align the data"""
+    """reshape the mask to align the data
+    
+    Parameters:
+        mask (array)  -- a detected mask
+        shape (tuple) -- the shape of the data
+        
+    Returns:
+        the aligned mask
+    """
     mask = Image.fromarray(mask).resize(shape, Image.ANTIALIAS)
     mask = np.fliplr(np.array(mask).T)
     return mask.astype(int)
