@@ -11,7 +11,15 @@ If you have any question, please open an issue or directly send an email to us.
 - Train the Mask R-CNN model on all NPF events from the four datasets and upload the trained model.
 - Provide a fancy GUI.
 
-## How to use the code
+## Requirements
+Please install the packages in the `requirements.txt`.
+
+```
+$ pip install -r requirements.txt
+```
+We find the versions of `PyTorch` (>=1.7) and `Python` (>=3.6) do not really affect the results. 
+
+## Usage
 
 1. Please change the parameters in the `options.py` file. Specific parameters:
 
@@ -27,12 +35,17 @@ If you have any question, please open an issue or directly send an email to us.
 
 **NOTE**: make sure that your local device is powerful enough; otherwise, please modify the function [save_SE_GR](https://github.com/cvvsu/maskNPF/blob/a959edf04f794d70e7ef8979494e8f36e317326e/model.py#L285) in the `model.py` to calculate GRs one-by-one (do not use the `multiprocessing` package).
 
+Or use the command line:
+```
+$ python3 main.py --station hyytiala --im_size 256 --scores 0.0 --vmax 1e4
+```
+
 
 ## Visualization 
 
-`psd2im` is the base function used for visualization. It can be used to draw surface plots or NPF images.
+[psd2im](https://github.com/cvvsu/maskNPF/blob/a9fba694765864962c8de1e3e7336c4d9dbb30d2/utils/utils.py#L18) is the base function used for visualization. It can be used to draw surface plots or NPF images.
 
-`draw_subplots` is used to draw surface plots with one or several colorbars (Fig. 2 and Fig. 6).
+[draw_subplots](https://github.com/cvvsu/maskNPF/blob/a9fba694765864962c8de1e3e7336c4d9dbb30d2/utils/utils.py#L148) is used to draw surface plots with one or several colorbars (Fig. 2 and Fig. 6).
 
 
 ## Masks

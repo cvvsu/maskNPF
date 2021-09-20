@@ -20,7 +20,7 @@ def get_args():
     parser.add_argument('--ckpt_dir', default='checkpoints', type=str, help='folder stores the checkpoints')
     parser.add_argument('--dataroot', metavar='DIR', default='datasets', help='path to dataset')
     parser.add_argument('--station', default='varrio', help='station that the dataset collected from')
-    parser.add_argument('--model_name', default='maskrcnnv2.pth', type=str, help='name of the pretrained model')
+    parser.add_argument('--model_name', default='maskrcnn.pth', type=str, help='name of the pretrained model')
     parser.add_argument('--im_size', default=256, type=int, help='image size for training. Square sizes are used but rectangle are also possible')
     parser.add_argument('--scores', default=0.00, type=float, help='threshold for objectiveness scores')
     parser.add_argument('--vmax', default=1e4, type=float, help='value scales for drawing')
