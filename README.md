@@ -7,7 +7,7 @@ If you have any question, please open an issue or directly send an email to us.
 
 ## TODO
 - Upload the pre-trained model used in the manuscript.
-- Use a notebook to illustrate how to use the code step-by-step.
+- ~~Use a notebook to illustrate how to use the code step-by-step.~~
 - Train the Mask R-CNN model on all NPF events from the four datasets and upload the trained model.
 - Provide a fancy GUI.
 
@@ -39,6 +39,8 @@ Or use the command line:
 ```
 $ python3 main.py --station hyytiala --im_size 256 --scores 0.0 --vmax 1e4
 ```
+
+Check the `demo.ipynb` file for more information.
 
 
 ## Visualization 
