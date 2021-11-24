@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 from multiprocessing import Pool
 from PIL import Image
+from tqdm import tqdm
 
 
 from matplotlib.figure import Figure
@@ -14,10 +15,10 @@ warnings.filterwarnings("ignore")
 
 import torch
 from torchvision import transforms
-from utils.utils import get_next_day, mkdirs, psd2im
-from utils.networks import get_instance_segmentation_model
-from utils.utils import reshape_mask
-from utils.fitting import get_GR, get_SE
+from utils import get_next_day, mkdirs, psd2im
+from utils import get_instance_segmentation_model
+from utils import reshape_mask
+from utils import get_GR, get_SE
 
 
 class NPFDetection(object):
@@ -29,7 +30,7 @@ class NPFDetection(object):
         self.cpu_count = os.cpu_count() // 2 + 1
         self.dataroot = os.path.join(opt.dataroot, opt.station)
         self.station = opt.station
-        self.vmax = opt.vmax
+        self.vmax = None if opt.dynamic_vmax else opt.vmax
         self.tm_res = opt.time_res
         self.df = pd.read_csv(os.path.join(self.dataroot, self.station+'.csv'), parse_dates=[0], index_col=0)         
         self.days = sorted(np.unique(self.df.index.date.astype(str)).tolist())
@@ -42,17 +43,26 @@ class NPFDetection(object):
         self.savefp = os.path.join(self.dataroot, 'images', 'one_day')
         mkdirs(self.savefp)
         self.dimg = 1
-        
-        with Pool(self.cpu_count) as p:
-            p.map(self.draw_image, self.days)
+
+        if self.cpu_count >= 8:
+            with Pool(self.cpu_count) as p:
+                p.map(self.draw_image, self.days)
+        else:
+            for day in tqdm(self.days):
+                self.draw_image(day)
 
     def draw_two_day_images(self):
         """Draw NPF images with two-day unit"""
         self.savefp = os.path.join(self.dataroot, 'images', 'two_day')
         mkdirs(self.savefp)
         self.dimg = 2
-        with Pool(self.cpu_count) as p:
-            p.map(self.draw_image, self.days)
+
+        if self.cpu_count >= 8:
+            with Pool(self.cpu_count) as p:
+                p.map(self.draw_image, self.days)
+        else:
+            for day in tqdm(self.days):
+                self.draw_image(day)
 
     def draw_image(self, day):
         """Draw an NPF image"""
@@ -236,65 +246,50 @@ class NPFDetection(object):
             mkdirs(savefp)
             np.save(os.path.join(savefp, f'{self.key}.npy'), self.masks_twoday[self.key][idx])
 
-    def get_GRs(self, df, mask):
-        mask = reshape_mask(mask, df.shape)
-        pos = np.where(mask)
-        ymin = np.min(pos[1])
-        ymax = np.max(pos[1])
-        dps = [float(dp) for dp in df.columns]
-        dp_start = dps[ymin]
-        dp_end = dps[ymax]
-        s_tm, e_tm = get_SE(df, mask)
-
-        gr_3_10, _, _ = get_GR(df, mask, 2.75, 10, savefp=None, tm_res=self.tm_res, vmax=self.vmax)
-        gr_10_25, _, _ = get_GR(df, mask, 10, 25.2, savefp=None, tm_res=self.tm_res, vmax=self.vmax)
-        savefp = os.path.join(self.dataroot, 'GR/3_25')
-        mkdirs(savefp)
-        gr_3_25, _, _ = get_GR(df, mask, 2.75, 25.2, savefp=savefp, tm_res=self.tm_res, vmax=self.vmax)
-        gr_mask, _, _ = get_GR(df, mask, dp_start, dp_end, savefp=None, tm_res=self.tm_res, vmax=self.vmax)
-        return s_tm, e_tm, gr_3_10, gr_10_25, gr_3_25, gr_mask
-
     def get_SE_GR(self, day):
         df = self.df.loc[day]
         mask = np.load(os.path.join(self.dataroot, 'masks/one_day', day+'.npy'), allow_pickle=True)
+        mask = reshape_mask(mask, df.shape)
         try:
-            s_tm, e_tm, gr_3_10, gr_10_25, gr_3_25, gr_mask = self.get_GRs(df, mask)
+            st, et = get_SE(df, mask)
+            gr_dict = get_GR(df, mask, self.tm_res, savefp=self.savefp, vmax=self.vmax)
         except:
-            print(day)
+            # print(day)
             return
 
         try:
             mask_ = np.load(os.path.join(self.dataroot, 'masks/two_day', day+'.npy'), allow_pickle=True)
             df_ = self.df.loc[day:get_next_day(day)]
             mask_ = reshape_mask(mask_, df_.shape)
-            st, et = get_SE(df_, mask_)
+            st_two, et_two = get_SE(df_, mask_)
         except:
-            st, et = s_tm, e_tm
-        #return s_tm, e_tm, st, et, gr_3_10, gr_10_25, gr_3_25
-        save_dict = {'date':[day],
-                     'GR (3-10)': [gr_3_10],
-                     'GR (10-25)': [gr_10_25],
-                     'GR (3-25)': [gr_3_25],
-                     'GR_mask': [gr_mask],
-                     'ST (one)': [s_tm],
-                     'ET (one)': [e_tm],
-                     'ST (two)': [st],
-                     'ET (two)': [et]}
+            st_two, et_two = st, et
+       
+        save_dict = {**{
+            'date': [day],
+            'start_time_one': [st],
+            'end_time_one': [et],
+            'start_time_two': [st_two],
+            'end_time_two': [et_two]
+        }, **gr_dict}
         pd.DataFrame(save_dict).to_csv(os.path.join(self.savefp, f'{day}.csv'), index=False)
 
     def save_SE_GR(self):
-        files = glob.glob(os.path.join(self.dataroot, 'masks/one_day')+'/*.npy')
-        daysh = [file.split(os.sep)[-1].split('.')[0] for file in files]
-        
-        grs = glob.glob(os.path.join(self.dataroot, 'GR')+'/*.csv')
-        days_1 = [gr.split(os.sep)[-1].split('.')[0] for gr in grs]
-        
-        days = [item for item in daysh if item not in days_1]
-        
+        r"""
+        obtain and save the start time, end time and the growth rates.
+        """
+        files = sorted(glob.glob(os.path.join(self.dataroot, 'masks/one_day')+'/*.npy'))
+        days = [file.split(os.sep)[-1].split('.')[0] for file in files]
+        print(f'Calculating growth rates for {len(days)} days.')
+
         self.savefp = os.path.join(self.dataroot, 'GR')
         mkdirs(self.savefp)
-        x_len = len(days) // 10
-        for i in range(11):
-            days_ =  days[i*x_len:(i+1)*x_len]
+
+        if self.cpu_count >= 8:
             with Pool(self.cpu_count) as p:
-                p.map(self.get_SE_GR, days_)
+                p.map(self.get_SE_GR, days)
+        else:
+            for day in tqdm(days):
+                self.get_SE_GR(day)
+
+        

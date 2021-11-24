@@ -24,10 +24,10 @@ def get_args():
     parser.add_argument('--im_size', default=256, type=int, help='image size for training. Square sizes are used but rectangle are also possible')
     parser.add_argument('--scores', default=0.00, type=float, help='threshold for objectiveness scores')
     parser.add_argument('--vmax', default=1e4, type=float, help='value scales for drawing')
+    parser.add_argument('--dynamic_vmax', action='store_true', help='utilize the dynamic surface plot if specified')
     parser.add_argument('--time_res', default=10, type=float, help='the time resolution of measurements. Default is 10 minutes')
     parser.add_argument('--mask_thres', default=0.5, type=float, help='threshold to binarize an mask')
     parser.add_argument('--ftsize', default=16, type=int, help='font size for elements in plots')
-    #parser.add_argument('--twoday', action='store_true', help='draw two-day NPF images')
     args = parser.parse_args()
 
     return args, get_message(parser, args)
