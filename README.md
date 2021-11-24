@@ -6,12 +6,13 @@ If you have any question, please open an issue or directly send an email to us.
 
 
 ## TODO
-- Upload the pre-trained model used in the manuscript.
+- ~~Upload the pre-trained model used in the manuscript.~~
 - ~~Use a notebook to illustrate how to use the code step-by-step.~~
 - Train the Mask R-CNN model on all NPF events from the four datasets and upload the trained model.
 
 ## Requirements
 Please install the packages in the `requirements.txt`.
+Download and put the [pretrained model](https://github.com/cvvsu/maskNPF/releases/download/v0.0/maskrcnn.pth) to the `checkpoints` folder. 
 
 ```
 $ pip install -r requirements.txt
