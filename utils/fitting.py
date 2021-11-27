@@ -241,7 +241,7 @@ def get_size_gr(tm_dp, name='modefitting'):
         name (str)       -- used as the keys for the return dictionary
 
     Parameters:
-        a dictionary containing grs (3-7, 7-15, 15-25, 3-25)
+        a dictionary containing grs (3-10, 10-25, 3-25)
     """
     gr_dict = {}
     tms = tm_dp[:, 0]
