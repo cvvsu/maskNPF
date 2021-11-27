@@ -5,15 +5,12 @@
 If you have any question, please open an issue or directly send an email to us.
 
 
-## TODO
-- ~~Upload the pre-trained model used in the manuscript.~~
-- ~~Use a notebook to illustrate how to use the code step-by-step.~~
-- Train the Mask R-CNN model on all NPF events from the four datasets and upload the trained model.
-
 ## Requirements
 Please install the packages in the `requirements.txt`.
-Download and put the [pretrained model](https://github.com/cvvsu/maskNPF/releases/download/v0.0/maskrcnn.pth) to the `checkpoints` folder. 
-
+Download and put the pretrained models to the `checkpoints` folder. 
+Two possible choices:
+- Model trained on a subset of the Hyytiälä datasets (reproduce the results shown in the manuscript): [model](https://github.com/cvvsu/maskNPF/releases/download/v0.0/maskrcnn.pth)
+- Model trained on all four datasets (recommend!): [model](https://github.com/cvvsu/maskNPF/releases/download/v0.1/maskrcnnfull.pth)
 ```
 $ pip install -r requirements.txt
 ```
@@ -46,6 +43,8 @@ Our code can calculate GRs automatically for the size ranges:
 - 10 - 25 nm
 - 3 - 25 nm
 
+
+***Note that the automatic mode fitting code is also released. But the automatic method may fail on some events. Be careful if you use the mode fitting code.***
 
 ## Citation
 Please kindly cite our paper if you use our code.
