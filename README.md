@@ -17,6 +17,12 @@ $ pip install -r requirements.txt
 We find the versions of `PyTorch` (>=1.7) and `Python` (>=3.6) do not really affect the results. 
 
 ## Usage
+1. Download the datasets to your local device.
+```
+$ python3 utils/get_datasets.py --station hyytiala --start_year 1990 --end_year 2021 --merge_df
+```
+
+2. run the code
 
 ```
 $ python3 main.py --station hyytiala --im_size 256 --scores 0.0 --vmax 1e4 --model_name maskrcnn.pth
