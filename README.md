@@ -1,6 +1,6 @@
 # maskNPF
 
-[Online pre-print paper](https://acp.copernicus.org/preprints/acp-2021-771/)
+[Online paper](https://acp.copernicus.org/articles/22/1293/2022/acp-22-1293-2022.html)
 
 If you have any question, please open an issue or directly send an email to us.
 
@@ -56,15 +56,16 @@ Our code can calculate GRs automatically for the size ranges:
 Please kindly cite our paper if you use our code.
 
 ```
-@Article{acp-2021-771,
+@Article{acp-22-1293-2022,
 AUTHOR = {Su, P. and Joutsensaari, J. and Dada, L. and Zaidan, M. A. and Nieminen, T. and Li, X. and Wu, Y. and Decesari, S. and Tarkoma, S. and Pet\"aj\"a, T. and Kulmala, M. and Pellikka, P.},
-TITLE = {New Particle Formation Events Detection with Deep Learning},
-JOURNAL = {Atmospheric Chemistry and Physics Discussions},
-VOLUME = {2021},
-YEAR = {2021},
-PAGES = {1--21},
-URL = {https://acp.copernicus.org/preprints/acp-2021-771/},
-DOI = {10.5194/acp-2021-771}
+TITLE = {New particle formation event detection with Mask R-CNN},
+JOURNAL = {Atmospheric Chemistry and Physics},
+VOLUME = {22},
+YEAR = {2022},
+NUMBER = {2},
+PAGES = {1293--1309},
+URL = {https://acp.copernicus.org/articles/22/1293/2022/},
+DOI = {10.5194/acp-22-1293-2022}
 }
 ```
 
