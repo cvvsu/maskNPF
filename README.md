@@ -1,9 +1,6 @@
 # maskNPF
 
-[Online paper](https://acp.copernicus.org/articles/22/1293/2022/acp-22-1293-2022.html)
-
-If you have any question, please open an issue or directly send an email to us.
-
+Official PyTorch code for [New particle formation event detection with Mask R-CNN](https://acp.copernicus.org/articles/22/1293/2022/acp-22-1293-2022.html). 
 
 ## Requirements
 Please install the packages in the `requirements.txt`.
